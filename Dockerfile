@@ -7,10 +7,12 @@ RUN apt-get update \
 WORKDIR /usr/src/app
 COPY Gemfile* ./
 RUN bundle install
-COPY . .
+
+ADD . /usr/src/app
+RUN rails db:migrate
 
 EXPOSE 3000
-CMD ["rails", "db", ":", "migrate"]
+
 CMD ["rails", "server", "-b", "0.0.0.0"]
 
 # docker build -t rspecdockerappimage .
